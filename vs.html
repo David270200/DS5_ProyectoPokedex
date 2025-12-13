@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PokéFinder | VS Battle</title>
+    <link rel="stylesheet" href="shared.css">
+</head>
+<body>
+
+    <header class="app-header">
+        <h1 class="brutalist-title">⚔️ POKÉMON VS ⚔️</h1>
+        <nav class="main-nav">
+            <a href="index.html" class="nav-link">🔍 BUSCAR</a>
+            <a href="historico.html" class="nav-link">⌛ HISTÓRICO</a>
+            <a href="vs.html" class="nav-link current-page">⚔️ VS</a>
+            <a href="favoritos.html" class="nav-link">❤️ FAVORITOS</a>
+        </nav>
+    </header>
+
+    <main id="app-container">
+
+        <div id="vs-search-area">
+            
+            <form id="vs-search-form-1" class="search-form-vs">
+                <input type="text" id="vs-input-1" placeholder="Pokémon 1 ID/Nombre" class="brutalist-element" required>
+                <button type="submit" class="brutalist-element">BUSCAR</button>
+            </form>
+
+            <span class="vs-label">VS</span>
+
+            <form id="vs-search-form-2" class="search-form-vs">
+                <input type="text" id="vs-input-2" placeholder="Pokémon 2 ID/Nombre" class="brutalist-element" required>
+                <button type="submit" class="brutalist-element">BUSCAR</button>
+            </form>
+        </div>
+
+        <button id="battle-btn" class="brutalist-element hidden">
+            ⚔️ ¡BATALLAR!
+        </button>
+
+        <section id="vs-results-container" class="hidden">
+            
+            <div id="vs-cards-summary-wrapper">
+                <div id="pokemon-vs-card-1" class="vs-card">
+                    <span id="vs-winner-1" class="badge-winner hidden">GANADOR</span>
+                </div>
+
+                <span class="vs-delimiter">VS</span>
+                
+                <div id="pokemon-vs-card-2" class="vs-card">
+                    <span id="vs-winner-2" class="badge-winner hidden">GANADOR</span>
+                </div>
+            </div>
+
+            <hr>
+
+            <div id="battle-analysis">
+                <h3>📊 ANÁLISIS DE BATALLA</h3>
+                
+                <div id="type-effectiveness-section">
+                    <h4>🛡️ Ventajas de Tipo</h4>
+                    <ul id="type-effectiveness-list">
+                        </ul>
+                </div>
+
+                <hr>
+
+                <div id="stats-comparison-section">
+                    <h4>📈 Comparación de Stats</h4>
+                    <div id="stats-comparison-container" class="comparison-grid">
+                        </div>
+                </div>
+
+            </div>
+
+        </section> </main>
+
+    <script src="shared.js"></script>
+    <script src="vs.js"></script> </body>
+</html>

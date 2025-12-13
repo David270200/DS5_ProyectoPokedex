@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PokéFinder | Favoritos</title>
+    <link rel="stylesheet" href="shared.css">
+</head>
+<body>
+
+    <header class="app-header">
+        <h1 class="brutalist-title">FAVORITOS</h1>
+        <nav class="main-nav">
+            <a href="index.html" class="nav-link">🔍 BUSCAR</a>
+            <a href="historico.html" class="nav-link">⌛ HISTÓRICO</a>
+            <a href="vs.html" class="nav-link">⚔️ VS</a>
+            <a href="favoritos.html" class="nav-link current-page">❤️ FAVORITOS</a>
+        </nav>
+    </header>
+
+    <main id="app-container">
+
+        <button id="clear-favorites-btn" class="brutalist-element">
+            LIMPIAR TODOS LOS FAVORITOS
+        </button>
+
+        <p id="empty-list-message" class="hidden">Aún no tienes Pokémon marcados como favoritos.</p>
+
+        <ul id="favorites-list" class="list-container">
+            </ul>
+
+    </main>
+
+    <script src="shared.js"></script>
+    <script src="favoritos.js"></script> </body>
+</html>

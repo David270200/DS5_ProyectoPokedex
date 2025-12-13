@@ -1,0 +1,109 @@
+/*
+ * =========================================================
+ * ARCHIVO: shared.css
+ * DESCRIPCIÓN: Contiene las variables CSS y estilos base
+ * para el look 'Brutalist' del proyecto PokéFinder.
+ * ROL: Diseñador CSS
+ * =========================================================
+ */
+
+/* --- 1. Variables CSS (Paleta de Colores y Estilo Brutalist) --- */
+:root {
+    /* Colores principales */
+    --color-bg: #f5e6d3;           /* Fondo beige */
+    --color-primary: #2d2d2d;      /* Negro/Gris oscuro */
+    --color-accent: #ffcc00;       /* Amarillo Pokémon */
+    --color-secondary: #ff6b6b;    /* Rojo coral */
+
+    /* Colores de estado y Badges */
+    --color-success: #4ecdc4;      /* Verde agua */
+    --color-error: #ff6b6b;
+    --color-warning: #ffa500;      /* Naranja */
+
+    /* Badges de origen (para JS) */
+    --color-api: var(--color-success);
+    --color-cache: var(--color-accent);
+    --color-expired: var(--color-warning);
+
+    /* Estilo Brutalist */
+    --border-width: 4px;
+    --border-color: var(--color-primary);
+    --shadow: 6px 6px 0px var(--color-primary);
+
+    /* Tipografía */
+    --font-family: 'Courier New', monospace;
+}
+
+/* --- 2. Estilos Globales y Reset Básico --- */
+*, *::before, *::after {
+    box-sizing: border-box;
+    /* Asegurar que las sombras y bordes cuenten en el tamaño */
+}
+
+body {
+    background-color: var(--color-bg);
+    color: var(--color-primary);
+    font-family: var(--font-family);
+    margin: 0;
+    padding: 0;
+    line-height: 1.5;
+}
+
+/* --- 3. Base del Estilo Brutalist (Botones/Inputs) --- */
+
+/* Estilo para todos los elementos interactivos */
+.brutalist-element {
+    border: var(--border-width) solid var(--border-color);
+    box-shadow: var(--shadow);
+    padding: 10px 20px;
+    background-color: white;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: transform 0.1s; /* Para el efecto de presión */
+}
+
+/* Efecto de Presión (para el Diseñador CSS) */
+.brutalist-element:hover {
+    box-shadow: 8px 8px 0px var(--color-secondary); /* Sombra más grande o color diferente en hover */
+}
+.brutalist-element:active {
+    transform: translate(4px, 4px); /* Simula la presión */
+    box-shadow: 2px 2px 0px var(--color-primary); /* Sombra minimizada */
+}
+
+/* --- 4. Estilos de Navegación (Header Común) --- */
+.app-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.main-nav {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.nav-link {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 0.75rem;
+    text-decoration: none;
+    color: var(--color-on-surface, #111);
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Asegura que los enlaces de navegación aprovechen el estilo brutalista cuando tengan la clase */
+.nav-link.brutalist-element {
+    box-shadow: 4px 4px 0 var(--color-primary);
+    transition: transform .08s ease, box-shadow .08s ease;
+}
+
+/*
+ * NOTA PARA EL DISEÑADOR CSS:
+ * Usar la estructura en "index.html" como base para estilizar
+ * la tarjeta de Pokémon y las barras de estadísticas (Flexbox/Grid).
+ */
