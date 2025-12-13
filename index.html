@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>PokéFinder — Buscar Pokémon</title>
+
+  <!-- link al CSS compartido (el compañero de CSS debe implementarlo) -->
+  <link rel="stylesheet" href="shared.css">
+
+  <!-- meta para cache busting durante desarrollo (opcional) -->
+  <meta name="robots" content="noindex" />
+</head>
+<body>
+  <!--
+    INDEX.HTML
+    - Responsable: (Tu nombre)
+    - Uso: página principal para buscar Pokémon y mostrar resultado.
+    - Notas para CSS: seguir variables y estilo brutalist (bordes 4px, sombra 6px sin blur).
+  -->
+
+  <header class="site-header" role="banner">
+    <div class="header-inner">
+      <!-- Logo / título grande (CSS hará el recuadro cyan) -->
+      <h1 id="siteTitle" class="site-title">POKÉMON FINDER</h1>
+
+      <!-- Navegación principal (usar estilos para que parezcan botones) -->
+      <nav class="main-nav" role="navigation" aria-label="Navegación principal">
+        <ul class="nav-list">
+          <li><a href="index.html" class="nav-link nav-active" data-nav="buscar">🔎 BUSCAR</a></li>
+          <li><a href="historico.html" class="nav-link" data-nav="historial">📜 HISTÓRICO</a></li>
+          <li><a href="vs.html" class="nav-link" data-nav="vs">⚔️ VS</a></li>
+          <li><a href="favoritos.html" class="nav-link" data-nav="favoritos">❤️ FAVORITOS</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="main" role="main">
+    <section class="search-section" aria-labelledby="searchTitle">
+      <h2 id="searchTitle" class="visually-hidden">Buscar Pokémon</h2>
+
+      <!-- Formulario de búsqueda -->
+      <form id="searchForm" class="search-form" autocomplete="off" aria-describedby="searchHelp">
+        <div class="controls-row">
+          <!-- Selector de modo de búsqueda: pokemon | ability -->
+          <div class="control control-mode">
+            <label for="searchMode" class="sr-only">Modo</label>
+            <select id="searchMode" name="mode" title="Modo de búsqueda">
+              <option value="pokemon" selected>Pokémon</option>
+              <option value="ability">Habilidad</option>
+            </select>
+          </div>
+
+          <!-- Input principal -->
+          <div class="control control-input">
+            <label for="searchInput" class="sr-only">Nombre o ID</label>
+            <input id="searchInput"
+                   name="query"
+                   type="text"
+                   inputmode="text"
+                   placeholder="Nombre o ID..."
+                   aria-label="Nombre o ID del Pokémon"
+                   required>
+          </div>
+
+          <!-- Botón de buscar -->
+          <div class="control control-button">
+            <button id="searchBtn" type="submit" aria-label="Buscar Pokémon">BUSCAR</button>
+          </div>
+        </div>
+
+        <p id="searchHelp" class="search-help">Busca por nombre (p. ej. pikachu) o número (p. ej. 25). Cambia a "Habilidad" para buscar por habilidad.</p>
+      </form>
+    </section>
+
+    <!-- Indicador global de carga (JS mostrará/ocultará) -->
+    <div id="loader" class="loader hidden" role="status" aria-live="polite" aria-hidden="true">
+      <span class="loader-dot"></span>
+      <span class="loader-text">Cargando...</span>
+    </div>
+
+    <!-- Área donde se mostrará la tarjeta del Pokémon o resultado de la habilidad -->
+    <section id="resultArea" class="result-area" aria-live="polite">
+      <!--
+        Aquí se inyecta:
+         - La tarjeta del Pokémon (#pokemonCard)
+         - O la tarjeta de habilidad (#abilityCard)
+         - JS debe insertar badge con data-origin="api" | "cache" | "expired"
+      -->
+      <div id="pokemonCard" class="pokemon-card placeholder hidden"></div>
+      <div id="abilityCard" class="ability-card placeholder hidden"></div>
+      <div id="errorBox" class="error-box hidden" role="alert"></div>
+    </section>
+
+    <!-- CONTROLES ADICIONALES / ACCIONES -->
+    <aside class="secondary-controls">
+      <button id="addFavoriteBtn" class="btn hidden" aria-hidden="true" title="Agregar a favoritos">❤️ Agregar a Favoritos</button>
+
+      <!-- Links rápidos -->
+      <div class="quick-links">
+        <a href="historico.html">Ver Histórico</a> ·
+        <a href="favoritos.html">Ver Favoritos</a> ·
+        <a href="vs.html">Ir a VS</a>
+      </div>
+    </aside>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-inner">
+      <small>PokéFinder — Proyecto Semestral · API: PokeAPI</small>
+      <div class="credits">Hecho por: [Nombres del grupo]</div>
+    </div>
+  </footer>
+
+  <!-- Templates (no visibles) - el JS puede clonar estos nodos -->
+  <template id="tpl-pokemon-card">
+    <article class="card card-pokemon" role="article">
+      <header class="card-header">
+        <div class="card-title-row">
+          <h3 class="poke-number">#<span class="poke-id"></span></h3>
+          <h2 class="poke-name"></h2>
+        </div>
+        <span class="badge origin-badge" data-origin="">ORIGEN</span>
+      </header>
+
+      <div class="card-body">
+        <div class="poke-media">
+          <img class="poke-sprite" src="" alt="Sprite de Pokémon" width="200" height="200" loading="lazy">
+        </div>
+
+        <div class="poke-info">
+          <div class="poke-types" aria-label="Tipos"></div>
+
+          <section class="poke-abilities" aria-labelledby="abilitiesTitle">
+            <h4 id="abilitiesTitle">Habilidades</h4>
+            <div class="abilities-list"></div>
+          </section>
+
+          <section class="poke-stats" aria-labelledby="statsTitle">
+            <h4 id="statsTitle">Estadísticas</h4>
+            <ul class="stats-list">
+              <!-- JS rellenará li con .stat-name & .stat-bar -->
+            </ul>
+          </section>
+        </div>
+      </div>
+
+      <footer class="card-footer">
+        <button class="btn btn-fav" data-action="toggle-fav" aria-pressed="false" title="Agregar / quitar favorito">❤️</button>
+      </footer>
+    </article>
+  </template>
+
+  <template id="tpl-ability-card">
+    <article class="card card-ability" role="article">
+      <header class="card-header">
+        <h2 class="ability-name"></h2>
+        <span class="badge origin-badge" data-origin="">ORIGEN</span>
+      </header>
+      <div class="card-body">
+        <p class="ability-desc"></p>
+        <h4>Pokémon con esta habilidad</h4>
+        <ul class="ability-pokemon-list"></ul>
+      </div>
+    </article>
+  </template>
+
+  <template id="tpl-history-item">
+    <li class="history-item">
+      <button class="history-link" data-name="">Nombre</button>
+      <button class="history-remove" title="Eliminar del historial">✖</button>
+    </li>
+  </template>
+
+  <!-- Toast simple para mensajes (oculto por default) -->
+  <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+
+  <!-- Scripts (shared.js contiene la lógica de cache y storage; index.js contiene la lógica de UI para esta página) -->
+  <script src="shared.js"></script>
+  <script src="index.js"></script>
+</body>
+</html>
