@@ -8,29 +8,39 @@
 </head>
 <body>
 
-    <header class="app-header">
-        <h1 class="brutalist-title">FAVORITOS</h1>
-        <nav class="main-nav">
-            <a href="index.html" class="nav-link">🔍 BUSCAR</a>
-            <a href="historico.html" class="nav-link">⌛ HISTÓRICO</a>
-            <a href="vs.html" class="nav-link">⚔️ VS</a>
-            <a href="favoritos.html" class="nav-link current-page">❤️ FAVORITOS</a>
-        </nav>
-    </header>
+    <div id="background-wrapper"></div> 
 
-    <main id="app-container">
+    <div id="main-wrapper-aligner">
+        
+        <main id="app-container">
 
-        <button id="clear-favorites-btn" class="brutalist-element">
-            LIMPIAR TODOS LOS FAVORITOS
-        </button>
+            <header class="app-header">
+                <h1 class="brutalist-title skewed-title list-title">❤️ FAVORITOS</h1> 
+                
+                <nav class="main-nav">
+                    <a href="index.html" class="nav-link brutalist-element">🔍 BUSCAR</a>
+                    <a href="historico.html" class="nav-link brutalist-element">⌛ HISTÓRICO</a>
+                    <a href="vs.html" class="nav-link brutalist-element">⚔️ VS</a>
+                    <a href="favoritos.html" class="nav-link brutalist-element current-page">❤️ FAVORITOS</a>
+                </nav>
+            </header>
 
-        <p id="empty-list-message" class="hidden">Aún no tienes Pokémon marcados como favoritos.</p>
+            <section id="page-content-wrapper">
+                
+                <p id="empty-list-message" class="hidden">Aún no tienes Pokémon marcados como favoritos.</p>
 
-        <ul id="favorites-list" class="list-container">
-            </ul>
+                <ul id="favorites-list" class="list-container">
+                    </ul>
 
-    </main>
+                <button id="clear-favorites-btn" class="brutalist-element clear-all-btn">
+                    LIMPIAR TODOS LOS FAVORITOS
+                </button>
+
+            </section>
+        </main>
+    </div> 
 
     <script src="shared.js"></script>
-    <script src="favoritos.js"></script> </body>
+    <script src="favoritos.js"></script>
+</body>
 </html>

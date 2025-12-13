@@ -2,20 +2,21 @@
  * =========================================================
  * ARCHIVO: shared.js
  * DESCRIPCIÓN: Módulo IIFE para gestionar localStorage (Caché, Favoritos, Histórico).
- * ROL: Ingeniero JavaScript
  * =========================================================
  */
 
 const StorageModule = (function() {
-    // Definición de constantes
-    const CACHE_TTL = 24 * 60 * 60 * 1000; // 24 horas en milisegundos
+    // 24 horas * 60 minutos * 60 segundos * 1000 milisegundos
+    const CACHE_TTL = 24 * 60 * 60 * 1000; 
+    const HISTORY_KEY = 'pokemon_history';
+    const FAVORITES_KEY = 'pokemon_favorites';
 
     /**
      * @description Verifica si un dato en localStorage es válido y no ha expirado.
-     * @param {string} key - Clave del dato a verificar.
+     * @param {string} key - Clave del dato a verificar (ej: 'cache_pokemon_bulbasaur').
      * @returns {object | null} - El dato si es válido, o null si está expirado/no existe.
      */
-    function getValidData(key) {
+    function getValidCache(key) {
         const storedItem = localStorage.getItem(key);
         if (!storedItem) {
             return null;
@@ -24,14 +25,13 @@ const StorageModule = (function() {
         const data = JSON.parse(storedItem);
         const now = new Date().getTime();
 
-        // Si es un dato cacheadO con TTL
+        // Verificar expiración solo si tiene timestamp
         if (data.timestamp && (now - data.timestamp > CACHE_TTL)) {
             console.log(`Cache expirado para: ${key}`);
             localStorage.removeItem(key); // Limpiar el cache expirado
             return null;
         }
 
-        // Si es un dato válido (Favoritos/Histórico no usan timestamp) o cache fresco
         return data.value;
     }
 
@@ -39,7 +39,7 @@ const StorageModule = (function() {
      * @description Guarda un dato en localStorage, opcionalmente con un timestamp (para caché).
      * @param {string} key - Clave del dato.
      * @param {*} value - Valor a guardar.
-     * @param {boolean} useTTL - Si se debe añadir un timestamp de expiración.
+     * @param {boolean} useTTL - Si se debe añadir un timestamp de expiración (Usar true solo para datos de API).
      */
     function setItem(key, value, useTTL = false) {
         const dataToStore = {
@@ -53,18 +53,36 @@ const StorageModule = (function() {
         localStorage.setItem(key, JSON.stringify(dataToStore));
     }
 
-    // Exponer solo las funciones públicas
+    /**
+     * @description Obtiene datos NO CACHEABLES (Histórico, Favoritos) que son solo arrays.
+     */
+    function getPersistentData(key) {
+        const storedItem = localStorage.getItem(key);
+        if (!storedItem) {
+            return [];
+        }
+        try {
+            return JSON.parse(storedItem).value || [];
+        } catch (e) {
+            console.error(`Error al parsear ${key}:`, e);
+            return [];
+        }
+    }
+
     return {
-        get: getValidData,
-        set: setItem,
+        // Funciones para Caché con TTL
+        getCache: getValidCache,
+        setCache: (key, value) => setItem(key, value, true),
+
+        // Funciones para Favoritos/Histórico (Arrays de IDs o Nombres)
+        getFavorites: () => getPersistentData(FAVORITES_KEY),
+        setFavorites: (data) => setItem(FAVORITES_KEY, data),
+        getHistory: () => getPersistentData(HISTORY_KEY),
+        setHistory: (data) => setItem(HISTORY_KEY, data),
+
         remove: (key) => localStorage.removeItem(key),
-        clearAll: () => localStorage.clear(), // Usado para limpieza total (histórico/favoritos)
+        clearAll: () => localStorage.clear(), 
+        KEYS: { HISTORY: HISTORY_KEY, FAVORITES: FAVORITES_KEY }
     };
 
 })();
-
-/*
- * NOTA PARA EL INGENIERO JAVASCRIPT:
- * 1. Implementar la lógica de Favoritos y Histórico usando las funciones de este módulo.
- * 2. Usar get/set con useTTL=true para la caché de las peticiones a la PokeAPI.
- */

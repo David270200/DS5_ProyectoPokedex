@@ -8,29 +8,39 @@
 </head>
 <body>
 
-    <header class="app-header">
-        <h1 class="brutalist-title">HISTÓRICO</h1>
-        <nav class="main-nav">
-            <a href="index.html" class="nav-link">🔍 BUSCAR</a>
-            <a href="historico.html" class="nav-link current-page">⌛ HISTÓRICO</a>
-            <a href="vs.html" class="nav-link">⚔️ VS</a>
-            <a href="favoritos.html" class="nav-link">❤️ FAVORITOS</a>
-        </nav>
-    </header>
+    <div id="background-wrapper"></div> 
 
-    <main id="app-container">
+    <div id="main-wrapper-aligner">
+        
+        <main id="app-container">
 
-        <button id="clear-history-btn" class="brutalist-element">
-            LIMPIAR TODO EL HISTÓRICO Y CACHÉ
-        </button>
+            <header class="app-header">
+                <h1 class="brutalist-title skewed-title list-title">📜 HISTÓRICO</h1> 
+                
+                <nav class="main-nav">
+                    <a href="index.html" class="nav-link brutalist-element">🔍 BUSCAR</a>
+                    <a href="historico.html" class="nav-link brutalist-element current-page">⌛ HISTÓRICO</a>
+                    <a href="vs.html" class="nav-link brutalist-element">⚔️ VS</a>
+                    <a href="favoritos.html" class="nav-link brutalist-element">❤️ FAVORITOS</a>
+                </nav>
+            </header>
 
-        <p id="empty-list-message" class="hidden">Aún no hay Pokémon en tu historial de búsquedas.</p>
+            <section id="page-content-wrapper">
+                
+                <p id="empty-list-message" class="hidden">Aún no hay Pokémon en tu historial de búsquedas.</p>
 
-        <ul id="history-list" class="list-container">
-            </ul>
+                <ul id="history-list" class="list-container">
+                    </ul>
 
-    </main>
+                <button id="clear-history-btn" class="brutalist-element clear-all-btn">
+                    LIMPIAR TODO
+                </button>
+
+            </section>
+        </main>
+    </div> 
 
     <script src="shared.js"></script>
-    <script src="historico.js"></script> </body>
+    <script src="historico.js"></script>
+</body>
 </html>

@@ -1,29 +1,24 @@
 /*
  * =========================================================
- * ARCHIVO: shared.css
- * DESCRIPCIÓN: Contiene las variables CSS y estilos base
- * para el look 'Brutalist' del proyecto PokéFinder.
- * ROL: Diseñador CSS
+ * ARCHIVO: shared.css (VERSION DEFINITIVA)
+ * DESCRIPCIÓN: Implementación completa del diseño Brutalist, la Pokébola Fija,
+ * y el Centrado Superior de la aplicación.
  * =========================================================
  */
 
-/* --- 1. Variables CSS (Paleta de Colores y Estilo Brutalist) --- */
+/* --- 1. Variables CSS (Paleta y Estilo Brutalist) --- */
 :root {
-    /* Colores principales */
-    --color-bg: #f5e6d3;           /* Fondo beige */
-    --color-primary: #2d2d2d;      /* Negro/Gris oscuro */
-    --color-accent: #ffcc00;       /* Amarillo Pokémon */
-    --color-secondary: #ff6b6b;    /* Rojo coral */
+    /* Colores principales del proyecto */
+    --color-bg: #f5e6d3;           /* Fondo beige claro */
+    --color-primary: #2d2d2d;      /* Negro/Gris oscuro (Bordes y texto) */
+    --color-accent: #ffcc00;       /* Amarillo Pokémon (Toggle/Caché) */
+    --color-secondary: #ff6b6b;    /* Rojo coral (Pokébola, Botones de acción) */
+    --color-cyan: #4ecdc4;         /* Cian/Verde agua (Título y Barras de Stats) */
 
     /* Colores de estado y Badges */
-    --color-success: #4ecdc4;      /* Verde agua */
-    --color-error: #ff6b6b;
-    --color-warning: #ffa500;      /* Naranja */
-
-    /* Badges de origen (para JS) */
-    --color-api: var(--color-success);
-    --color-cache: var(--color-accent);
-    --color-expired: var(--color-warning);
+    --color-success: var(--color-cyan);
+    --color-error: var(--color-secondary);
+    --color-warning: #ffa500;
 
     /* Estilo Brutalist */
     --border-width: 4px;
@@ -34,10 +29,9 @@
     --font-family: 'Courier New', monospace;
 }
 
-/* --- 2. Estilos Globales y Reset Básico --- */
+/* --- 2. ESTILOS GLOBALES, FONDO Y CONSISTENCIA --- */
 *, *::before, *::after {
     box-sizing: border-box;
-    /* Asegurar que las sombras y bordes cuenten en el tamaño */
 }
 
 body {
@@ -47,63 +41,210 @@ body {
     margin: 0;
     padding: 0;
     line-height: 1.5;
+    min-height: 100vh;
+    overflow-x: hidden; /* Previene scroll horizontal accidental */
+    
+    /* Patrón de puntos (FIJO) */
+    background-image: radial-gradient(var(--color-primary) 1px, transparent 1px);
+    background-size: 20px 20px;
+    background-attachment: fixed; /* CRÍTICO: Mantiene el fondo de puntos fijo */
 }
 
-/* --- 3. Base del Estilo Brutalist (Botones/Inputs) --- */
+/* --- 3. MAQUETACIÓN DE LA POKÉBOLA GIGANTE DE FONDO (FIJA y EXACTA) --- */
+#background-wrapper {
+    position: fixed; /* CRÍTICO: Fija la Pokébola en la pantalla */
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    border: var(--border-width) solid var(--border-color);
+    box-shadow: var(--shadow);
+    z-index: 1;
 
-/* Estilo para todos los elementos interactivos */
+    /* Posicionamiento y Centrado: Fijo en el centro de la ventana */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    /* División de Colores: Rojo (arriba) y Blanco (abajo) */
+    background: linear-gradient(to bottom, 
+        var(--color-secondary) 0%, 
+        var(--color-secondary) 49.5%, /* Rojo */
+        var(--color-primary) 49.5%,   /* Línea negra central */
+        var(--color-primary) 50.5%,
+        white 50.5%,                  /* Blanco */
+        white 100%
+    );
+}
+
+/* Círculo Central Blanco/Negro (Fijo) */
+#background-wrapper::before {
+    content: '';
+    position: absolute; 
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: white;
+    border: var(--border-width) solid var(--border-color);
+}
+
+/* --- 4. CONTENEDOR CENTRAL (Centrado Horizontal y Alineación Superior) --- */
+#main-wrapper-aligner {
+    /* Contenedor Flexbox que alinea la caja principal */
+    display: flex;
+    justify-content: center; /* Centrado Horizontal */
+    align-items: flex-start; /* CRÍTICO: Alineación al inicio (arriba) */
+    min-height: 100vh;
+    width: 100%;
+    padding-top: 5vh; /* Ajuste para subirlo ligeramente, replicando la imagen */
+    padding-bottom: 5vh;
+    position: relative;
+    z-index: 5;
+}
+
+#app-container {
+    /* La caja principal flotante */
+    position: relative; 
+    z-index: 10;
+    width: 100%;
+    max-width: 550px; /* Ancho máximo para que la tarjeta se vea bien */
+}
+
+/* --- 5. ESTILO BRUTALIST GENERAL Y COMPONENTES --- */
 .brutalist-element {
     border: var(--border-width) solid var(--border-color);
     box-shadow: var(--shadow);
     padding: 10px 20px;
     background-color: white;
     text-transform: uppercase;
+    font-weight: bold;
     cursor: pointer;
-    transition: transform 0.1s; /* Para el efecto de presión */
+    transition: transform 0.1s;
 }
-
-/* Efecto de Presión (para el Diseñador CSS) */
 .brutalist-element:hover {
-    box-shadow: 8px 8px 0px var(--color-secondary); /* Sombra más grande o color diferente en hover */
+    box-shadow: 8px 8px 0px var(--color-secondary);
 }
 .brutalist-element:active {
-    transform: translate(4px, 4px); /* Simula la presión */
-    box-shadow: 2px 2px 0px var(--color-primary); /* Sombra minimizada */
+    transform: translate(4px, 4px);
+    box-shadow: 2px 2px 0px var(--color-primary);
 }
 
-/* --- 4. Estilos de Navegación (Header Común) --- */
+/* HEADER Y NAVEGACIÓN */
 .app-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    padding: 1rem;
+    text-align: center;
+    margin-bottom: 20px;
 }
+.brutalist-title {
+    background-color: var(--color-cyan);
+    border: var(--border-width) solid var(--border-color);
+    box-shadow: var(--shadow);
+    padding: 10px 30px;
+    display: inline-block;
+    position: relative;
+    z-index: 12;
 
+    /* Inclinación exacta */
+    transform: skew(-10deg);
+}
+/* Asegurar que el título esté en su posición correcta sobre la nav */
 .main-nav {
     display: flex;
-    gap: 0.5rem;
-    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    position: relative;
+    top: 0;
+    z-index: 11;
+}
+.main-nav .nav-link {
+    padding: 8px 15px;
+    text-decoration: none;
+    color: var(--color-primary);
+    background-color: white;
+}
+.main-nav .current-page {
+    background-color: var(--color-accent); /* Botón activo en amarillo */
+    border-color: var(--color-primary);
 }
 
-.nav-link {
-    display: inline-flex;
+/* BARRA DE BÚSQUEDA */
+.search-bar-wrapper {
+    display: flex;
+    gap: 5px;
+    align-items: stretch;
+    background-color: var(--color-secondary); /* Fondo rojo como en la imagen */
+    padding: 15px;
+    border: var(--border-width) solid var(--color-primary);
+    box-shadow: var(--shadow);
+    position: relative;
+    z-index: 10;
+}
+#search-type-toggle {
+    background-color: var(--color-accent); /* Botón Amarillo */
+    padding: 0 15px;
+    white-space: nowrap;
+    border: none; /* Quitamos el borde extra del botón dentro del wrapper */
+}
+#search-input {
+    flex-grow: 1;
+    background-color: white;
+    padding: 8px 10px;
+    border: none;
+}
+#search-button {
+    background-color: white;
+    /* El botón buscar tiene un color diferente en el borde */
+    border-color: var(--color-secondary); 
+}
+
+/* --- 6. ESTILOS DE TARJETAS Y LISTAS --- */
+
+#pokemon-result-card {
+    margin-top: 20px;
+    padding: 30px;
+    background-color: white;
+    text-align: left;
+}
+/* Estilo para las barras de estadísticas */
+.stat-bar-wrapper {
+    background-color: #eee;
+    border: 1px solid var(--color-primary);
+    height: 15px;
+    flex-grow: 1;
+}
+.stat-bar {
+    height: 100%;
+    background-color: var(--color-cyan);
+    transition: width 0.5s;
+}
+
+/* Estilo para los ítems de lista (Histórico/Favoritos) */
+.list-item {
+    display: flex;
+    justify-content: space-between;
     align-items: center;
-    padding: 0.5rem 0.75rem;
-    text-decoration: none;
-    color: var(--color-on-surface, #111);
-    border-radius: 4px;
+    margin-bottom: 10px;
+    padding: 15px;
+    background-color: white;
+    border: var(--border-width) solid var(--border-color);
+    box-shadow: var(--shadow);
     cursor: pointer;
 }
-
-/* Asegura que los enlaces de navegación aprovechen el estilo brutalista cuando tengan la clase */
-.nav-link.brutalist-element {
-    box-shadow: 4px 4px 0 var(--color-primary);
-    transition: transform .08s ease, box-shadow .08s ease;
+.list-item-content {
+    display: flex;
+    align-items: center;
+    gap: 15px;
 }
-
-/*
- * NOTA PARA EL DISEÑADOR CSS:
- * Usar la estructura en "index.html" como base para estilizar
- * la tarjeta de Pokémon y las barras de estadísticas (Flexbox/Grid).
- */
+.list-item-actions button {
+    /* Botones de eliminar/favorito dentro de la lista */
+    padding: 5px;
+    border: 2px solid var(--color-primary);
+    background-color: white;
+}
+.clear-all-btn {
+    margin-top: 20px;
+    background-color: var(--color-secondary); /* Botón de acción principal rojo */
+    color: white;
+    border-color: var(--color-primary);
+}
