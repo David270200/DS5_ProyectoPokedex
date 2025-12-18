@@ -3,84 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PokéFinder | Búsqueda</title>
-    <link rel="stylesheet" href="shared.css">
+    <title>PokéFinder</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div id="background-wrapper"></div> 
+    <!-- Pokébola de fondo -->
+    <div class="contenedor">
+        <div class="pokeball">
+            <div class="pokeball-top">
+                <div class="overlay"></div>
+            </div>
 
-    <div id="main-wrapper-aligner">
-        
-        <main id="app-container">
+            <div class="pokeball-mid">
+                <div class="ball-center"></div>
+            </div>
 
-            <header class="app-header">
-                <h1 class="brutalist-title skewed-title">POKÉMON FINDER</h1> 
-                
-                <nav class="main-nav">
-                    <a href="index.html" class="nav-link brutalist-element current-page">🔍 BUSCAR</a>
-                    <a href="historico.html" class="nav-link brutalist-element">⌛ HISTÓRICO</a>
-                    <a href="vs.html" class="nav-link brutalist-element">⚔️ VS</a>
-                    <a href="favoritos.html" class="nav-link brutalist-element">❤️ FAVORITOS</a>
-                </nav>
-            </header>
+            <div class="pokeball-bot"></div>
+        </div>
+    </div>
 
-            <section id="page-content-wrapper">
-                
-                <form id="search-form" class="search-bar-wrapper">
-                    <button type="button" id="search-type-toggle" class="brutalist-element type-selector">
-                        <span id="current-search-type">POKÉMON</span>
-                    </button>
-                    <input type="text" id="search-input" placeholder="NOMBRE O ID..." class="brutalist-element" required>
-                    <button type="submit" id="search-button" class="brutalist-element action-button">BUSCAR</button>
-                </form>
-                
-                <div id="loading-indicator" class="hidden">...</div>
-                <div id="error-message" class="hidden">...</div>
+    <!-- UI al frente -->
+    <div class="main-content">
+        <header class="title-card">
+            <h1>POKÉMON FINDER</h1>
+        </header>
 
-                <section id="pokemon-result-card" class="brutalist-element hidden">
-                    
-                    <span id="data-source-badge" class="badge"></span>
+        <nav class="top-buttons">
+            <button class="btn btn-cyan active">🔍 BUSCAR</button>
+            <button class="btn btn-white">📜 HISTÓRICO</button>
+            <button class="btn btn-white">⚔️ VS</button>
+            <button class="btn btn-white">❤️ FAVORITOS</button>
+        </nav>
 
-                    <div id="card-header">
-                        <img id="pokemon-sprite" src="" alt="Sprite del Pokémon">
-                        <h2 id="pokemon-name-id">#?? NOMBRE</h2>
-                        <div id="pokemon-types" class="types-container"></div>
-                    </div>
+        <div class="search-bar">
+            <div class="select-box">
+                👾 POKÉMON <span>↕</span>
+            </div>
+            <input type="text" placeholder="NOMBRE O ID..." class="input-text">
+            <button class="btn-search">BUSCAR</button>
+        </div>
+    </div>
 
-                    <hr>
-
-                    <h3>HABILIDADES</h3>
-                    <ul id="pokemon-abilities-list"></ul>
-                    
-                    <hr>
-
-                    <h3>ESTADÍSTICAS BASE</h3>
-                    <div id="pokemon-stats-container" class="stats-grid">
-                        <div class="stat-row">
-                            <span class="stat-name">HP:</span>
-                            <div class="stat-bar-wrapper">
-                                <div class="stat-bar" style="width: 0%;"></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <button id="favorite-btn" class="brutalist-element">
-                        ❤️ Agregar a favoritos
-                    </button>
-
-                    <hr>
-
-                    <h3>CADENA DE EVOLUCIÓN</h3>
-                    <div id="evolution-chain-container" class="chain-flow"></div>
-                    
-                </section>
-                
-            </section>
-
-        </main>
-        
-    </div> <script src="shared.js"></script>
-    <script src="index.js"></script>
 </body>
 </html>
