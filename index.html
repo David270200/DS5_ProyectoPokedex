@@ -3,47 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PokéFinder</title>
-    <link rel="stylesheet" href="style.css">
+    <title>PokéFinder | Buscar</title>
+
+    <link rel="stylesheet" href="shared.css">
 </head>
 <body>
 
-    <!-- Pokébola de fondo -->
     <div class="contenedor">
         <div class="pokeball">
             <div class="pokeball-top">
                 <div class="overlay"></div>
             </div>
-
             <div class="pokeball-mid">
                 <div class="ball-center"></div>
             </div>
-
             <div class="pokeball-bot"></div>
         </div>
     </div>
 
-    <!-- UI al frente -->
     <div class="main-content">
+
         <header class="title-card">
-            <h1>POKÉMON FINDER</h1>
+            <h1>POKÉFINDER</h1>
         </header>
 
         <nav class="top-buttons">
-            <button class="btn btn-cyan active">🔍 BUSCAR</button>
-            <button class="btn btn-white">📜 HISTÓRICO</button>
-            <button class="btn btn-white">⚔️ VS</button>
-            <button class="btn btn-white">❤️ FAVORITOS</button>
+            <a href="index.html" class="btn btn-cyan active">🔍 BUSCAR</a>
+            <a href="historico.html" class="btn btn-white">📜 HISTÓRICO</a>
+            <a href="vs.html" class="btn btn-white">⚔️ VS</a>
+            <a href="favoritos.html" class="btn btn-white">❤️ FAVORITOS</a>
         </nav>
 
-        <div class="search-bar">
-            <div class="select-box">
-                👾 POKÉMON <span>↕</span>
-            </div>
-            <input type="text" placeholder="NOMBRE O ID..." class="input-text">
-            <button class="btn-search">BUSCAR</button>
-        </div>
+        <section class="search-bar">
+            <select id="searchType" class="select-box">
+                <option value="pokemon">👾 Pokémon</option>
+                <option value="ability">✨ Habilidad</option>
+            </select>
+
+            <input 
+                type="text" 
+                id="searchInput"
+                class="input-text"
+                placeholder="NOMBRE O ID..."
+                autocomplete="off"
+            >
+
+            <button id="searchBtn" class="btn-search">
+                BUSCAR
+            </button>
+        </section>
+
+        <section id="loading" class="hidden" style="text-align: center; font-weight: bold; padding: 20px;">
+            ⏳ Buscando en la Pokédex...
+        </section>
+
+        <section id="error" class="hidden" style="background: #ffcccc; border: 2px solid black; padding: 10px; text-align: center; margin-bottom: 10px;">
+            ❌ Pokémon no encontrado
+        </section>
+
+        <section id="results" class="results">
+            </section>
+
     </div>
+
+    <script src="shared.js"></script>
 
 </body>
 </html>

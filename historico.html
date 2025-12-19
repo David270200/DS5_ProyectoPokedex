@@ -8,39 +8,46 @@
 </head>
 <body>
 
-    <div id="background-wrapper"></div> 
+    <div class="contenedor">
+        <div class="pokeball">
+            <div class="pokeball-top">
+                <div class="overlay"></div>
+            </div>
+            <div class="pokeball-mid">
+                <div class="ball-center"></div>
+            </div>
+            <div class="pokeball-bot"></div>
+        </div>
+    </div>
 
-    <div id="main-wrapper-aligner">
-        
-        <main id="app-container">
+    <div class="main-content">
 
-            <header class="app-header">
-                <h1 class="brutalist-title skewed-title list-title">📜 HISTÓRICO</h1> 
-                
-                <nav class="main-nav">
-                    <a href="index.html" class="nav-link brutalist-element">🔍 BUSCAR</a>
-                    <a href="historico.html" class="nav-link brutalist-element current-page">⌛ HISTÓRICO</a>
-                    <a href="vs.html" class="nav-link brutalist-element">⚔️ VS</a>
-                    <a href="favoritos.html" class="nav-link brutalist-element">❤️ FAVORITOS</a>
-                </nav>
-            </header>
+        <header class="title-card">
+            <h1>HISTÓRICO</h1>
+        </header>
 
-            <section id="page-content-wrapper">
-                
-                <p id="empty-list-message" class="hidden">Aún no hay Pokémon en tu historial de búsquedas.</p>
+        <nav class="top-buttons">
+            <a href="index.html" class="btn btn-white">🔍 BUSCAR</a>
+            <a href="historico.html" class="btn btn-cyan active">📜 HISTÓRICO</a>
+            <a href="vs.html" class="btn btn-white">⚔️ VS</a>
+            <a href="favoritos.html" class="btn btn-white">❤️ FAVORITOS</a>
+        </nav>
 
-                <ul id="history-list" class="list-container">
-                    </ul>
+        <section class="results">
+            <div id="empty-list-message" class="hidden"></div>
+            
+            <ul id="history-list" class="list-container">
+                </ul>
 
-                <button id="clear-history-btn" class="brutalist-element clear-all-btn">
-                    LIMPIAR TODO
+            <div style="text-align: center; width: 100%;">
+                <button id="clear-history-btn" class="clear-all-btn hidden">
+                    LIMPIAR TODO EL HISTORIAL
                 </button>
+            </div>
+        </section>
 
-            </section>
-        </main>
-    </div> 
+    </div>
 
     <script src="shared.js"></script>
-    <script src="historico.js"></script>
 </body>
 </html>

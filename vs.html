@@ -7,77 +7,60 @@
     <link rel="stylesheet" href="shared.css">
 </head>
 <body>
+    <div class="contenedor">
+        <div class="pokeball">
+            <div class="pokeball-top"><div class="overlay"></div></div>
+            <div class="pokeball-mid"><div class="ball-center"></div></div>
+            <div class="pokeball-bot"></div>
+        </div>
+    </div>
 
-    <div id="background-wrapper"></div> 
+    <div class="main-content">
+        <header class="title-card">
+            <h1>POKÉMON VS</h1>
+        </header>
 
-    <div id="main-wrapper-aligner">
-        
-        <main id="app-container">
+        <nav class="top-buttons">
+            <a href="index.html" class="btn btn-white">🔍 BUSCAR</a>
+            <a href="historico.html" class="btn btn-white">📜 HISTÓRICO</a>
+            <a href="vs.html" class="btn btn-cyan active">⚔️ VS</a>
+            <a href="favoritos.html" class="btn btn-white">❤️ FAVORITOS</a>
+        </nav>
 
-            <header class="app-header">
-                <h1 class="brutalist-title skewed-title list-title">⚔️ POKÉMON VS ⚔️</h1>
-                
-                <nav class="main-nav">
-                    <a href="index.html" class="nav-link brutalist-element">🔍 BUSCAR</a>
-                    <a href="historico.html" class="nav-link brutalist-element">⌛ HISTÓRICO</a>
-                    <a href="vs.html" class="nav-link brutalist-element current-page">⚔️ VS</a>
-                    <a href="favoritos.html" class="nav-link brutalist-element">❤️ FAVORITOS</a>
-                </nav>
-            </header>
-
-            <section id="page-content-wrapper">
-                
-                <div id="vs-search-area" class="search-bar-wrapper">
-                    
-                    <form id="vs-search-form-1" class="search-form-vs">
-                        <input type="text" id="vs-input-1" placeholder="1" class="brutalist-element" required>
-                        <button type="submit" class="brutalist-element action-button">BUSCAR</button>
-                    </form>
-
-                    <span class="vs-label">VS</span>
-
-                    <form id="vs-search-form-2" class="search-form-vs">
-                        <input type="text" id="vs-input-2" placeholder="4" class="brutalist-element" required>
-                        <button type="submit" class="brutalist-element action-button">BUSCAR</button>
-                    </form>
+        <section class="search-bar-vs-container">
+            <div class="vs-search-box">
+                <div class="input-group">
+                    <input type="text" id="vs-input-1" class="input-text" placeholder="POKÉMON 1...">
+                    <button id="vs-search-btn-1" class="btn-search">BUSCAR</button>
                 </div>
+                <div id="vs-preview-1" class="vs-preview-card"></div>
+            </div>
 
-                <button id="battle-btn" class="brutalist-element clear-all-btn hidden">
-                    ⚔️ ¡BATALLAR!
-                </button>
+            <span class="vs-divider-text">VS</span>
 
-                <section id="vs-results-container" class="brutalist-element hidden">
-                    
-                    <div id="vs-cards-summary-wrapper">
-                        <div id="pokemon-vs-card-1" class="vs-card"></div>
-                        <span class="vs-delimiter">VS</span>
-                        <div id="pokemon-vs-card-2" class="vs-card"></div>
-                    </div>
+            <div class="vs-search-box">
+                <div class="input-group">
+                    <input type="text" id="vs-input-2" class="input-text" placeholder="POKÉMON 2...">
+                    <button id="vs-search-btn-2" class="btn-search">BUSCAR</button>
+                </div>
+                <div id="vs-preview-2" class="vs-preview-card"></div>
+            </div>
+        </section>
 
-                    <hr>
+        <div style="text-align:center; margin-top: 20px;">
+            <button id="vs-battle-btn" class="btn-search btn-red hidden">⚔️ ¡BATALLAR!</button>
+        </div>
 
-                    <div id="battle-analysis">
-                        <h3>📊 ANÁLISIS DE BATALLA</h3>
-                        
-                        <div id="type-effectiveness-section">
-                            <h4>🛡️ Ventajas de Tipo</h4>
-                            <ul id="type-effectiveness-list"></ul>
-                        </div>
+        <section id="vs-results" class="results hidden">
+            <div class="stats-comparison-card">
+                <h3>📊 COMPARACIÓN DE ESTADÍSTICAS</h3>
+                <div id="stats-vs-container"></div>
+            </div>
 
-                        <hr>
-
-                        <div id="stats-comparison-section">
-                            <h4>📈 Comparación de Stats</h4>
-                            <div id="stats-comparison-container" class="comparison-grid"></div>
-                        </div>
-
-                    </div>
-
-                </section> </section>
-        </main>
-    </div> 
+            <div id="analysis-container"></div>
+        </section>
+    </div>
 
     <script src="shared.js"></script>
-    <script src="vs.js"></script>
 </body>
 </html>

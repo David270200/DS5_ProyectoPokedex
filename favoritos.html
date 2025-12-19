@@ -5,36 +5,123 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PokéFinder | Favoritos</title>
     <link rel="stylesheet" href="shared.css">
+    <style>
+        /* AJUSTES PARA QUE EL CONTENIDO NO SE TAPADO */
+        
+        /* contenedor de la pokébola para que este al fondo */
+        .contenedor {
+            z-index: 1 !important; /* Capa más baja */
+            opacity: 0.8;
+        }
+
+        /* contenido alfrente*/
+        #main-wrapper-aligner {
+            position: relative;
+            z-index: 10 !important; /* Capa más alta */
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        #app-container {
+            background: rgba(224, 224, 224, 0.9); /* Fondo grisáceo semi-opaco  */
+            padding: 20px;
+            border: 3px solid black;
+            box-shadow: 10px 10px 0px rgba(0,0,0,0.5);
+            width: 95%;
+            max-width: 800px;
+            margin-top: 50px;
+        }
+
+        /* Estilo de tarjeta */
+        .fav-card {
+            background: white !important;
+            border: 3px solid black !important;
+            margin-bottom: 10px;
+            box-shadow: 5px 5px 0px black !important;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 15px;
+        }
+
+        .fav-content {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .fav-img-box {
+            border: 2px solid #000;
+            background: #fff;
+            width: 60px;
+            height: 60px;
+        }
+
+        .fav-text h3 {
+            margin: 0;
+            font-size: 1rem;
+        }
+
+        .delete-fav-btn {
+            background: #ff4d4d !important;
+            border: 2px solid black !important;
+            width: 45px;
+            height: 45px;
+            cursor: pointer;
+            box-shadow: 3px 3px 0px black;
+        }
+
+        .delete-fav-btn img {
+            width: 20px;
+            filter: brightness(0) invert(1); /* Icono blanco */
+        }
+    </style>
 </head>
 <body>
-
-    <div id="background-wrapper"></div> 
+    <div class="contenedor">
+        <div class="pokeball">
+            <div class="pokeball-top">
+                <div class="overlay"></div>
+            </div>
+            <div class="pokeball-mid">
+                <div class="ball-center"></div>
+            </div>
+            <div class="pokeball-bot"></div>
+        </div>
+    </div>
 
     <div id="main-wrapper-aligner">
         
         <main id="app-container">
 
             <header class="app-header">
-                <h1 class="brutalist-title skewed-title list-title">❤️ FAVORITOS</h1> 
+                <div class="title-card" style="text-align:center; margin-bottom: 20px;">
+                    <h1 style="font-size: 30px;">❤️ FAVORITOS</h1> 
+                </div>
                 
-                <nav class="main-nav">
-                    <a href="index.html" class="nav-link brutalist-element">🔍 BUSCAR</a>
-                    <a href="historico.html" class="nav-link brutalist-element">⌛ HISTÓRICO</a>
-                    <a href="vs.html" class="nav-link brutalist-element">⚔️ VS</a>
-                    <a href="favoritos.html" class="nav-link brutalist-element current-page">❤️ FAVORITOS</a>
+                <nav class="top-buttons" style="justify-content: center; margin-bottom: 30px;">
+                    <a href="index.html" class="btn btn-white brutalist-element">🔍 BUSCAR</a>
+                    <a href="historico.html" class="btn btn-white brutalist-element">⌛ HISTÓRICO</a>
+                    <a href="vs.html" class="btn btn-white brutalist-element">⚔️ VS</a>
+                    <a href="favoritos.html" class="btn btn-cyan brutalist-element">❤️ FAVORITOS</a>
                 </nav>
             </header>
 
             <section id="page-content-wrapper">
                 
-                <p id="empty-list-message" class="hidden">Aún no tienes Pokémon marcados como favoritos.</p>
+                <p id="empty-list-message" class="hidden" style="text-align: center; font-weight: bold;">
+                    No tienes Pokémon en favoritos.
+                </p>
 
                 <ul id="favorites-list" class="list-container">
                     </ul>
 
-                <button id="clear-favorites-btn" class="brutalist-element clear-all-btn">
-                    LIMPIAR TODOS LOS FAVORITOS
-                </button>
+                <center>
+                    <button id="clear-favorites-btn" class="clear-all-btn brutalist-element">
+                        🗑️ LIMPIAR TODO
+                    </button>
+                </center>
 
             </section>
         </main>
