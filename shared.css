@@ -1,6 +1,4 @@
-/* =========================================================
-   VARIABLES Y CONFIGURACIÓN BASE
-   ========================================================= */
+
 :root {
     --border-size: 3px;
     --shadow-offset: 4px;
@@ -13,7 +11,7 @@
 
 * {
     box-sizing: border-box;
-    font-family: 'Courier Prime', monospace;
+    font-family: 'Courier new', monospace;
 }
 
 .hidden {
@@ -28,6 +26,7 @@ body {
     margin: 0;
     position: relative;
     overflow-x: hidden;
+       
 }
 
 /* contenedor de la pokeball*/
@@ -57,7 +56,6 @@ body {
 .pokeball-top {
     flex: 1;
     background: rgba(231, 46, 46, 0.92);
-    position: relative;
 }
 
 .overlay {
@@ -80,8 +78,8 @@ body {
     top: 50%;
     width: 150px;
     height: 150px;
-    background-color: #f4f4f4;
-    border: 18px solid black;
+    background: #f4f4f4;
+    border: 18px solid rgba(2, 2, 2, 0.945);
     border-radius: 50%;
     transform: translateY(-50%);
     z-index: 2;
@@ -109,7 +107,7 @@ body {
     background-color: var(--color-cyan);
     border: var(--border-size) solid black;
     padding: 15px 40px;
-    box-shadow: var(--shadow-offset) var(--shadow-offset) 4px black;
+    box-shadow: 8px 8px 0px black;
     transform: rotate(-3deg);
 }
 
@@ -122,15 +120,16 @@ body {
 .top-buttons {
     display: flex;
     gap: 10px;
+    height: 50px;
 }
 
 /* Botones y Elementos Brutalistas */
 .btn, .btn-search, .brutalist-element {
-    border: var(--border-size) solid black;
+    border: 3px solid black;
     padding: 8px 15px;
     font-weight: bold;
     cursor: pointer;
-    box-shadow: var(--shadow-offset) var(--shadow-offset) 0px black;
+    box-shadow: 7px 7px 0px black;
     font-size: 0.8rem;
     text-decoration: none;
     color: black;
@@ -153,15 +152,16 @@ body {
 .search-bar {
     display: flex;
     gap: 10px;
-    width: 100%;
+    width: 65%;
 }
 
 .select-box {
-    background-color: var(--color-yellow);
-    border: var(--border-size) solid black;
-    padding: 10px;
-    font-size: 0.9rem;
-    box-shadow: var(--shadow-offset) var(--shadow-offset) 0px black;
+    background-color: yellow;
+    border: 3px solid black;
+    padding: 15px;
+    font-size: 20px;
+    border: 3px solid black;
+    border-radius: 5px;
 }
 
 .input-text {
@@ -181,10 +181,9 @@ body {
 }
 
 .pokemon-card {
-    background-color: var(--color-gray-bg) !important;
-    border: var(--border-size) solid black;
+    background-color: white;
+    border: 3px solid black;
     padding: 20px;
-    box-shadow: var(--shadow-offset) var(--shadow-offset) 0px black;
     text-align: center;
     max-width: 500px;
     margin: 0 auto;
@@ -195,10 +194,12 @@ body {
     border: 3px solid black;
     margin-bottom: 20px;
     padding: 20px;
+    width: 150px;
+    margin: 0 auto 20px;
 }
 
 .img-container img {
-    width: 120px;
+    width: 100px;
     image-rendering: pixelated;
 }
 
@@ -211,25 +212,41 @@ body {
     font-weight: bold;
 }
 
-.badge.api { background-color: var(--color-cyan); }
-.badge.cache { background-color: var(--color-yellow); }
+.badge.api {
+     background-color: var(--color-cyan); 
+     margin-left: 426px;
+     position: relative;
+     bottom: 20px;
+    }
+
+.badge.cache { 
+    background-color: var(--color-yellow);
+    margin-left: 426px;
+    position: relative;
+    bottom: 20px;
+ }
 
 .types {
     display: flex;
-    justify-content: center;
+    justify-content: last baseline;
     gap: 8px;
-    margin: 10px 0;
 }
 
 .type {
     border: 2px solid black;
     padding: 4px 8px;
     font-size: 0.7rem;
-    background: #eee;
+    background: #000;
     font-weight: bold;
+    color: white;
 }
 
 /* Barras de Estadísticas */
+.stats-container {
+    margin-top: 20px;
+    text-align: left;
+}
+
 .stat-row {
     display: flex;
     align-items: center;
@@ -262,8 +279,7 @@ body {
 .abilities-container {
     display: flex;
     gap: 10px;
-    justify-content: center;
-    margin: 15px 0;
+    justify-content: last baseline;
 }
 
 .ability-badge {

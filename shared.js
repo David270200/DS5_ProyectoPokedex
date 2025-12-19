@@ -6,10 +6,24 @@ const StorageModule = (function () {
     const FAVORITES_KEY = 'pokemon_favorites';
 
     const TYPE_CHART = {
-    grass: { fire: 0.5, water: 2, grass: 0.5, poison: 0.5, fly: 0.5, bug: 0.5 },
-    fire: { fire: 0.5, water: 0.5, grass: 2, ice: 2, bug: 2, steel: 2 },
-    water: { fire: 2, water: 0.5, grass: 0.5, ground: 2, rock: 2 },
-    // Puedes ampliar esta lista con todos los tipos
+    normal: { rock: 0.5, ghost: 0, steel: 0.5 },
+    fire: { fire: 0.5, water: 0.5, grass: 2, ice: 2, bug: 2, rock: 0.5, dragon: 0.5, steel: 2 },
+    water: { fire: 2, water: 0.5, grass: 0.5, ground: 2, rock: 2, dragon: 0.5 },
+    grass: { fire: 0.5, water: 2, grass: 0.5, poison: 0.5, ground: 2, flying: 0.5, bug: 0.5, rock: 2, dragon: 0.5, steel: 0.5 },
+    electric: { water: 2, grass: 0.5, electric: 0.5, ground: 0, flying: 2, dragon: 0.5 },
+    ice: { fire: 0.5, water: 0.5, grass: 2, ice: 0.5, ground: 2, flying: 2, dragon: 2, steel: 0.5 },
+    fighting: { normal: 2, ice: 2, poison: 0.5, flying: 0.5, psychic: 0.5, bug: 0.5, rock: 2, ghost: 0, dark: 2, steel: 2, fairy: 0.5 },
+    poison: { grass: 2, poison: 0.5, ground: 0.5, rock: 0.5, ghost: 0.5, steel: 0, fairy: 2 },
+    ground: { fire: 2, grass: 0.5, electric: 2, poison: 2, bug: 0.5, rock: 2, steel: 2 },
+    flying: { grass: 2, electric: 0.5, fighting: 2, bug: 2, rock: 0.5, steel: 0.5 },
+    psychic: { fighting: 2, poison: 2, psychic: 0.5, dark: 0, steel: 0.5 },
+    bug: { fire: 0.5, grass: 2, fighting: 0.5, poison: 0.5, flying: 0.5, psychic: 2, ghost: 0.5, dark: 2, steel: 0.5, fairy: 0.5 },
+    rock: { fire: 2, ice: 2, fighting: 0.5, ground: 0.5, flying: 2, bug: 2, steel: 0.5 },
+    ghost: { normal: 0, psychic: 2, ghost: 2, dark: 0.5 },
+    dragon: { dragon: 2, steel: 0.5, fairy: 0 },
+    dark: { fighting: 0.5, psychic: 2, ghost: 2, dark: 0.5, fairy: 0.5 },
+    steel: { fire: 0.5, water: 0.5, electric: 0.5, ice: 2, rock: 2, steel: 0.5, fairy: 2 },
+    fairy: { fire: 0.5, fighting: 2, poison: 0.5, dragon: 2, dark: 2, steel: 0.5 }
 };
 
 function getEffectiveness(attackerTypes, defenderTypes) {
@@ -24,9 +38,7 @@ function getEffectiveness(attackerTypes, defenderTypes) {
     return totalMult;
 }
 
-    /* ============================
-       STORAGE HELPERS
-    ============================ */
+    /* STORAGE HELPERS */
 
     function getValidCache(key) {
         const stored = localStorage.getItem(key);
@@ -52,9 +64,6 @@ function getEffectiveness(attackerTypes, defenderTypes) {
         localStorage.setItem(key, JSON.stringify({ value }));
     }
 
-    /* ============================
-       DOM READY INIT
-    ============================ */
 
     document.addEventListener('DOMContentLoaded', () => {
         // Inicializar Histórico si existe el contenedor
@@ -73,9 +82,7 @@ function getEffectiveness(attackerTypes, defenderTypes) {
 
         if (!searchBtn) return;
 
-        /* ============================
-           EVENTOS DE BÚSQUEDA
-        ============================ */
+        /* los eventos de búsqueda */
 
         searchBtn.addEventListener('click', () => {
             const query = searchInput.value.trim().toLowerCase();
@@ -88,30 +95,39 @@ function getEffectiveness(attackerTypes, defenderTypes) {
         });
 
         async function searchPokemon(query) {
-            resetUI();
-            showLoading(true);
-            try {
-                let data;
-                let source = 'api';
-                const cached = getValidCache(`cache_pokemon_${query}`);
+    resetUI();
+    showLoading(true);
+    try {
+        let data;
+        let source = 'api';
+        
+        // busca en el cache (ya sea por nombre o por ID)
+        const cached = getValidCache(`cache_pokemon_${query}`);
 
-                if (cached) {
-                    data = cached;
-                    source = 'cache';
-                } else {
-                    const res = await fetch(`${API_BASE}/pokemon/${query}`);
-                    if (!res.ok) throw new Error();
-                    data = await res.json();
-                    setCache(`cache_pokemon_${data.name}`, data);
-                }
-                renderPokemon(data, source);
-                addToHistory(data.name);
-            } catch (err) {
-                showError('❌ Pokémon no encontrado');
-            } finally {
-                showLoading(false);
-            }
+        if (cached) {
+            data = cached;
+            source = 'cache';
+        } else {
+            // Si no está, va a la API
+            const res = await fetch(`${API_BASE}/pokemon/${query}`);
+            if (!res.ok) throw new Error();
+            data = await res.json();
+
+            // Guardael Pokémon con su nombre
+            setCache(`cache_pokemon_${data.name.toLowerCase()}`, data);
+            
+            // Guarda el mismo objeto usando su ID
+            setCache(`cache_pokemon_${data.id}`, data);
         }
+        
+        renderPokemon(data, source);
+        addToHistory(data.name);
+    } catch (err) {
+        showError('❌ Pokémon no encontrado');
+    } finally {
+        showLoading(false);
+    }
+}
 
         async function searchAbility(query) {
             resetUI();
@@ -128,9 +144,7 @@ function getEffectiveness(attackerTypes, defenderTypes) {
             }
         }
 
-        /* ============================
-           RENDERIZADO DE COMPONENTES
-        ============================ */
+        /* RENDERIZADO DE COMPONENTES */
 
         async function renderPokemon(pokemon, source) {
             const isFav = getArray(FAVORITES_KEY).includes(pokemon.name);
@@ -144,7 +158,7 @@ function getEffectiveness(attackerTypes, defenderTypes) {
                     <div class="types">
                         ${pokemon.types.map(t => `<span class="type">${t.type.name.toUpperCase()}</span>`).join('')}
                     </div>
-                    <p style="font-weight:bold; font-size:0.7rem; margin:15px 0 5px;">HABILIDADES</p>
+                    <p style="font-weight:bold; font-size:0.7rem; margin-left: -375px;">HABILIDADES</p>
                     <div class="abilities-container">
                         ${pokemon.abilities.map(a => `
                             <div class="ability-badge ${a.is_hidden ? 'ability-hidden' : 'ability-normal'}">
@@ -283,9 +297,7 @@ function getEffectiveness(attackerTypes, defenderTypes) {
         }
     });
 
-    /* ============================
-       PÁGINA DE HISTÓRICO
-    ============================ */
+    /* PÁGINA DE HISTÓRICO*/
     async function renderHistoryPage() {
         const list = document.getElementById('history-list');
         const emptyMsg = document.getElementById('empty-list-message');
@@ -339,7 +351,6 @@ function getEffectiveness(attackerTypes, defenderTypes) {
             if (confirm('¿Vaciar historial?')) { setArray(HISTORY_KEY, []); renderHistoryPage(); }
         };
     }
-    /* Añadir dentro de document.addEventListener('DOMContentLoaded', () => { ... */
 
 /* Dentro del DOMContentLoaded */
 
@@ -414,7 +425,7 @@ if (battleBtn) {
         const results = document.getElementById('vs-results');
         results.classList.remove('hidden');
 
-        // --- 1. RENDERIZAR BARRAS DE ESTADÍSTICAS (LO QUE FALTA) ---
+        // RENDERIZAR BARRAS DE ESTADÍSTICAS //
         const statsContainer = document.getElementById('stats-vs-container');
         const labels = ['HP', 'ATK', 'DEF', 'SP.ATK', 'SP.DEF', 'SPD'];
         
@@ -442,7 +453,7 @@ if (battleBtn) {
         }).join('');
 
 
-        // --- 2. CÁLCULOS DE TIPO Y PUNTAJE ---
+        //CÁLCULOS DE TIPO Y PUNTAJE//
         const types1 = pokemonData1.types.map(t => t.type.name);
         const types2 = pokemonData2.types.map(t => t.type.name);
         const mult1 = getEffectiveness(types1, types2);
@@ -483,9 +494,8 @@ if (battleBtn) {
     };
 }
 
-/* ============================
-   PÁGINA DE FAVORITOS
-============================ */
+/* 
+   PÁGINA DE FAVORITOS */
 async function renderFavoritesPage() {
     const list = document.getElementById('favorites-list');
     const emptyMsg = document.getElementById('empty-fav-message');
@@ -578,7 +588,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (document.getElementById('favorites-list')) {
         renderFavoritesPage();
     }
-    // ... resto de tu código
 });
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -624,7 +633,7 @@ async function renderFavoritesPage() {
         }
 
         const li = document.createElement('li');
-        li.className = 'fav-card brutalist-element'; // Usamos tus clases de estilo
+        li.className = 'fav-card brutalist-element'; 
         li.innerHTML = `
             <div class="fav-content">
                 <div class="fav-img-box">
@@ -652,9 +661,6 @@ window.removeFromFavs = (name) => {
     favs = favs.filter(n => n !== name);
     setArray(FAVORITES_KEY, favs);
     renderFavoritesPage();
-    
-    // Si tienes abierto el histórico o búsqueda en otra pestaña, 
-    // se actualizará al recargar gracias al localStorage compartido.
 };
 
     return { getArray, setArray };
