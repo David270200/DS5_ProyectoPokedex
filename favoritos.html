@@ -5,78 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PokéFinder | Favoritos</title>
     <link rel="stylesheet" href="shared.css">
-    <style>
-        /* AJUSTES PARA QUE EL CONTENIDO NO SE TAPADO */
-        
-        /* contenedor de la pokébola para que este al fondo */
-        .contenedor {
-            z-index: 1 !important; /* Capa más baja */
-            opacity: 0.8;
-        }
-
-        /* contenido alfrente*/
-        #main-wrapper-aligner {
-            position: relative;
-            z-index: 10 !important; /* Capa más alta */
-            width: 100%;
-            display: flex;
-            justify-content: center;
-        }
-
-        #app-container {
-            background: rgba(224, 224, 224, 0.9); /* Fondo grisáceo semi-opaco  */
-            padding: 20px;
-            border: 3px solid black;
-            box-shadow: 10px 10px 0px rgba(0,0,0,0.5);
-            width: 95%;
-            max-width: 800px;
-            margin-top: 50px;
-        }
-
-        /* Estilo de tarjeta */
-        .fav-card {
-            background: white !important;
-            border: 3px solid black !important;
-            margin-bottom: 10px;
-            box-shadow: 5px 5px 0px black !important;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 15px;
-        }
-
-        .fav-content {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .fav-img-box {
-            border: 2px solid #000;
-            background: #fff;
-            width: 60px;
-            height: 60px;
-        }
-
-        .fav-text h3 {
-            margin: 0;
-            font-size: 1rem;
-        }
-
-        .delete-fav-btn {
-            background: #ff4d4d !important;
-            border: 2px solid black !important;
-            width: 45px;
-            height: 45px;
-            cursor: pointer;
-            box-shadow: 3px 3px 0px black;
-        }
-
-        .delete-fav-btn img {
-            width: 20px;
-            filter: brightness(0) invert(1); /* Icono blanco */
-        }
-    </style>
+    
 </head>
 <body>
     <div class="contenedor">

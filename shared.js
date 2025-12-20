@@ -154,11 +154,11 @@ function getEffectiveness(attackerTypes, defenderTypes) {
                     <div class="img-container">
                         <img src="${pokemon.sprites.front_default}" alt="${pokemon.name}">
                     </div>
-                    <h2>#${pokemon.id} ${pokemon.name.toUpperCase()}</h2>
+                    <h2style="margin-left: -20px;">#${pokemon.id} ${pokemon.name.toUpperCase()}</h2>
                     <div class="types">
                         ${pokemon.types.map(t => `<span class="type">${t.type.name.toUpperCase()}</span>`).join('')}
                     </div>
-                    <p style="font-weight:bold; font-size:0.7rem; margin-left: -375px;">HABILIDADES</p>
+                    <p style="font-weight:bold; font-size:0.7rem;">HABILIDADES</p>
                     <div class="abilities-container">
                         ${pokemon.abilities.map(a => `
                             <div class="ability-badge ${a.is_hidden ? 'ability-hidden' : 'ability-normal'}">
@@ -176,7 +176,10 @@ function getEffectiveness(attackerTypes, defenderTypes) {
                                 </div>`;
                         }).join('')}
                     </div>
-                    <button class="btn-fav">${isFav ? '❤️' : '🤍'}</button>
+                    <div style="display: flex; justify-content: center; width: 100%; margin: 10px 0;">
+    <button class="btn-fav">${isFav ? '❤️' : '🤍'}</button>
+</div>
+
                     <div id="evolution-section" class="evolution-chain">Cargando evoluciones...</div>
                 </article>`;
 
@@ -334,9 +337,16 @@ function getEffectiveness(attackerTypes, defenderTypes) {
                     </div>`;
 
                 li.querySelector('.btn-del-hist').onclick = () => {
-                    setArray(HISTORY_KEY, getArray(HISTORY_KEY).filter(p => p !== name));
-                    renderHistoryPage();
+                // 1. Quitar del historial
+                setArray(HISTORY_KEY, getArray(HISTORY_KEY).filter(p => p !== name));
+
+                // 2. Borrar cache asociado
+                localStorage.removeItem(`cache_pokemon_${name}`);
+
+                // 3. Renderizar de nuevo
+                renderHistoryPage();
                 };
+
                 li.querySelector('.btn-fav-hist').onclick = () => {
                     let f = getArray(FAVORITES_KEY);
                     f.includes(name) ? f = f.filter(x => x !== name) : f.push(name);
@@ -396,11 +406,14 @@ async function searchForVS(inputIdx) {
         else pokemonData2 = data;
 
         // Render de la previsualización individual con su badge
-        preview.innerHTML = `
-            <span class="badge ${source}">${source.toUpperCase()}</span>
-            <img src="${data.sprites.front_default}" style="width:80px">
-            <h4 style="margin:5px 0">#${data.id} ${data.name.toUpperCase()}</h4>
-        `;
+       preview.innerHTML = `
+    <div class="vs-card" id="vs-card-${inputIdx}">
+        <img src="${data.sprites.front_default}" style="width:80px">
+        <h4>#${data.id} ${data.name.toUpperCase()}</h4>
+        <div class="winner-badge hidden">🏆 GANADOR</div>
+    </div>
+`;
+
 
         checkBattleReady();
     } catch (e) {
@@ -491,6 +504,21 @@ if (battleBtn) {
         if (typeof updateWinnerUI === "function") {
             updateWinnerUI(score1, score2);
         }
+
+        // LIMPIAR ESTADOS PREVIOS
+document.querySelectorAll('.winner-badge').forEach(b => {
+    b.classList.add('hidden');
+});
+
+// DECIDIR GANADOR
+if (score1 > score2) {
+    document.querySelector('#vs-card-1 .winner-badge').classList.remove('hidden');
+} else if (score2 > score1) {
+    document.querySelector('#vs-card-2 .winner-badge').classList.remove('hidden');
+}
+// Si hay empate → no mostramos nada
+
+
     };
 }
 
@@ -641,7 +669,7 @@ async function renderFavoritesPage() {
                 </div>
                 <div class="fav-text">
                     <span class="fav-id">#${data.id}</span>
-                    <h3 class="fav-name">${data.name.toUpperCase()}</h3>
+                    <h3 class="fav-name" style="text-align: left; margin-left: 5px;">${data.name.toUpperCase()}</h3>
                     <div class="fav-types">
                         ${data.types.map(t => `<span class="type-badge mini ${t.type.name}">${t.type.name.toUpperCase()}</span>`).join('')}
                     </div>
