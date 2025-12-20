@@ -251,37 +251,52 @@ function getEffectiveness(attackerTypes, defenderTypes) {
         }
 
         async function renderAbility(ability) {
-            const desc = ability.effect_entries.find(e => e.language.name === 'es')?.effect 
-                        || ability.effect_entries.find(e => e.language.name === 'en')?.effect 
-                        || "Sin descripción.";
 
-            results.innerHTML = `
-                <article class="ability-card">
-                    <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <h2>✨ ${ability.name.toUpperCase()}</h2>
-                        <span class="badge api">#${ability.id}</span>
-                    </div>
-                    <div class="effect-box"><h3>EFECTO</h3><p>${desc}</p></div>
-                    <p style="font-weight:bold; font-size:0.8rem;">POKÉMON CON ESTA HABILIDAD (${ability.pokemon.length})</p>
-                    <div class="pokemon-grid-container"><div class="pokemon-grid" id="ability-grid"></div></div>
-                </article>`;
+    const desc =
+        ability.flavor_text_entries.find(e => e.language.name === 'es')?.flavor_text
+     || ability.flavor_text_entries.find(e => e.language.name === 'en')?.flavor_text
+     || "Sin descripción en español.";
 
-            const grid = document.getElementById('ability-grid');
-            for (const p of ability.pokemon) {
-                const id = p.pokemon.url.split('/').filter(Boolean).pop();
-                const imgUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
-                
-                const item = document.createElement('div');
-                item.className = 'grid-item';
-                item.innerHTML = `<img src="${imgUrl}"><strong>${p.pokemon.name.toUpperCase()}</strong>`;
-                item.onclick = () => {
-                    searchInput.value = p.pokemon.name;
-                    searchType.value = 'pokemon';
-                    searchBtn.click();
-                };
-                grid.appendChild(item);
-            }
-        }
+    const cleanDesc = desc.replace(/\n|\f/g, ' ');
+
+    results.innerHTML = `
+        <article class="ability-card">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <h2>✨ ${ability.name.toUpperCase()}</h2>
+                <span class="badge api">#${ability.id}</span>
+            </div>
+            <div class="effect-box">
+                <h3>DESCRIPCIÓN</h3>
+                <p>${cleanDesc}</p>
+            </div>
+            <p style="font-weight:bold; font-size:0.8rem;">
+                POKÉMON CON ESTA HABILIDAD (${ability.pokemon.length})
+            </p>
+            <div class="pokemon-grid-container">
+                <div class="pokemon-grid" id="ability-grid"></div>
+            </div>
+        </article>`;
+    
+    const grid = document.getElementById('ability-grid');
+    for (const p of ability.pokemon) {
+        const id = p.pokemon.url.split('/').filter(Boolean).pop();
+        const imgUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
+
+        const item = document.createElement('div');
+        item.className = 'grid-item';
+        item.innerHTML = `
+            <img src="${imgUrl}">
+            <strong>${p.pokemon.name.toUpperCase()}</strong>
+        `;
+        item.onclick = () => {
+            searchInput.value = p.pokemon.name;
+            searchType.value = 'pokemon';
+            searchBtn.click();
+        };
+        grid.appendChild(item);
+    }
+}
+
 
         function resetUI() { results.innerHTML = ''; errorBox.classList.add('hidden'); }
         function showLoading(show) { loading.classList.toggle('hidden', !show); }
