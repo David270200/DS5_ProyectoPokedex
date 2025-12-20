@@ -226,7 +226,7 @@ function getEffectiveness(attackerTypes, defenderTypes) {
                     if (node.evolves_to.length > 0) {
                         const arrow = document.createElement('div');
                         arrow.className = 'evo-arrow';
-                        arrow.innerText = '➡️';
+                        arrow.innerText = '→';
                         nodeDiv.appendChild(arrow);
 
                         const branches = document.createElement('div');
@@ -332,7 +332,7 @@ function getEffectiveness(attackerTypes, defenderTypes) {
                     <div class="history-img-box"><img src="${pData.sprites.front_default}"></div>
                     <div class="history-info"><h3>#${pData.id} ${name.toUpperCase()}</h3></div>
                     <div class="history-actions">
-                        <button class="btn-action btn-fav-hist">${isFav ? '❤️' : '🤍'}</button>
+                        <button class="btn-action btn-fav-hist">${isFav ? '🤍' : '❤️'}</button>
                         <button class="btn-action btn-del-hist">🗑️</button>
                     </div>`;
 
