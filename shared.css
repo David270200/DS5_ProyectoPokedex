@@ -212,13 +212,14 @@ body {
     font-weight: bold;
 }
 
+ /*badge api */
 .badge.api {
      background-color: var(--color-cyan); 
-     margin-left: 426px;
+     margin-left: 439px;
      position: relative;
      bottom: 20px;
     }
-
+ /*badge cache */
 .badge.cache { 
     background-color: var(--color-yellow);
     margin-left: 426px;
@@ -377,7 +378,7 @@ body {
 .evo-arrow {
     font-size: 1.5rem;
     font-weight: bold;
-    color: black;
+    color: rgb(251, 10, 10);
     user-select: none;
 }
 /* busqueda por habilidad */
