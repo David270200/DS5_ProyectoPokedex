@@ -226,7 +226,7 @@ function getEffectiveness(attackerTypes, defenderTypes) {
                     if (node.evolves_to.length > 0) {
                         const arrow = document.createElement('div');
                         arrow.className = 'evo-arrow';
-                        arrow.innerText = '→';
+                        arrow.innerText = '➡️';
                         nodeDiv.appendChild(arrow);
 
                         const branches = document.createElement('div');
@@ -332,7 +332,7 @@ function getEffectiveness(attackerTypes, defenderTypes) {
                     <div class="history-img-box"><img src="${pData.sprites.front_default}"></div>
                     <div class="history-info"><h3>#${pData.id} ${name.toUpperCase()}</h3></div>
                     <div class="history-actions">
-                        <button class="btn-action btn-fav-hist">${isFav ? '🤍' : '❤️'}</button>
+                        <button class="btn-action btn-fav-hist">${isFav ? '❤️' : '🤍'}</button>
                         <button class="btn-action btn-del-hist">🗑️</button>
                     </div>`;
 
@@ -406,7 +406,7 @@ async function searchForVS(inputIdx) {
         else pokemonData2 = data;
 
         // Render de la previsualización individual con su badge
-       preview.innerHTML = `
+preview.innerHTML = `
     <div class="vs-card" id="vs-card-${inputIdx}">
         <img src="${data.sprites.front_default}" style="width:80px">
         <h4>#${data.id} ${data.name.toUpperCase()}</h4>
